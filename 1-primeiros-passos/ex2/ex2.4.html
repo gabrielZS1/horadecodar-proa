@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //Leia 3 valores diferentes e mostre a soma dos 2 maiores.
+
+        const a = Number(prompt("Digite o primeiro valor:"));
+        const b = Number(prompt("Digite o segundo valor:"));
+        const c = Number(prompt("Digite o terceiro valor:"));
+
+        const somaMaiores = (a + b + c) - Math.min(a, b, c);
+
+        alert("A soma dos dois maiores valores é: " + somaMaiores);
+    </script>
+</body>
+
+</html>

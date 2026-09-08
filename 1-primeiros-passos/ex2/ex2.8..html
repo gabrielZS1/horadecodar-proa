@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //2.8. Leia 4 números, aceitando apenas valores maiores que 0 e menores que 10. Calcule a média e:
+
+        //- se média > 5, exiba "Você passou no teste";
+        //- caso contrário, exiba "Tente novamente".
+
+        alert("Digite 4 números maiores que 0 e menores que 10");
+
+        let soma = 0;
+        let quantidadeValida = 0;
+
+        for (let i = 1; i <= 4; i++) {
+            let numero = Number(prompt(`Digite seu ${i}º numero:`));
+
+            // Se o número estiver fora do intervalo permitido
+            if (numero <= 0 || numero >= 10) {
+                alert("Número inválido! Digite um valor entre 0 e 10.");
+                i--; // Decrementa o contador para repetir essa tentativa
+            } else {
+                soma += numero; // Acumula a soma dos números válidos
+            }
+        }
+
+        let media = soma / 4;
+
+        if (media > 5) {
+            alert("Você passou no teste");
+        } else {
+            alert("Tente novamente");
+        }
+
+
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //Leia 6 números. Some apenas os valores menores que 72. Exiba a soma e todos os valores informados.
+
+        let valores = [];
+        let soma = 0;
+
+        for (let i = 1; i <= 6; i++) {
+            let numero = Number(prompt(`Digite seu ${i}º numero:`));
+            valores.push(numero);
+            
+            if (numero < 72) {
+                soma += numero;
+            }
+        }
+
+        alert("Valores informados:", valores);
+        alert("Soma dos valores menores que 72:", soma);
+    </script>
+</body>
+</html>
