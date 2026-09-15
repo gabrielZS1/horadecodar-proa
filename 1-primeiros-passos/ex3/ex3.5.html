@@ -1,14 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <script>
-        // Leia 2 notas de um aluno, calcule a média final e considere aprovação com nota 9,5. Em seguida, pergunte: `Calcular a média de outro aluno? (S/N)`.
+        // Leia 2 notas de um aluno, calcule a média final e considere aprovação com nota 9,5. Em seguida, pergunte: 
+        // `Calcular a média de outro aluno? (S/N)`.
         // Se a resposta for `S`, repita; caso contrário, encerre e mostre a quantidade de alunos aprovados.
+
+
+
+        var aprovados = 0
+        var resposta
+
+        do {
+            var nota1 = Number(prompt("Digite a primeira nota"))
+            var nota2 = Number(prompt("Digite a segunda nota"))
+
+            var media = (nota1 + nota2) / 2
+
+            if (media >= 9.5) {
+                aprovados = aprovados + 1
+            }
+
+            resposta = prompt("Calcular a média de outro aluno? (S/N)")
+
+        } while (resposta.toUpperCase() == "S")
+
+        alert(aprovados + " aluno(s) foram aprovados")
     </script>
 </body>
+
 </html>

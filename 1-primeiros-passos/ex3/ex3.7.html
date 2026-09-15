@@ -8,6 +8,18 @@
 <body>
     <script>
         // Leia um valor `N` (N > 0) e imprima todos os inteiros de 1 até `N`.
+
+        var n = Number(prompt("Digite um valor N (N > 0)"))
+
+        while (n <= 0) {
+            alert("Valor inválido, digite um número maior que zero")
+            n = Number(prompt("Digite um valor N (N > 0)"))
+        }
+
+        for (let i = 1; i <= n; i++) {
+            console.log(i)
+        }
+
     </script>
 </body>
 </html>

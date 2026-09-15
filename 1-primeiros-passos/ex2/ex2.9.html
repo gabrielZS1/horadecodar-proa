@@ -10,7 +10,8 @@
         //Leia o ano de nascimento e informe se a pessoa pode votar no ano atual (sem considerar o mês).
 
         var nascimento = Number(prompt("Digite o ano em que você nasceu"))
-        var idade = 2026 - nascimento
+        var anoAtual = new Date().getFullYear()
+        var idade = anoAtual - nascimento
 
         if ( idade >= 16 ){
             alert ("Você pode votar essa ano, pois tem: " + idade + " anos")

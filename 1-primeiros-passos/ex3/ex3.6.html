@@ -8,6 +8,24 @@
 <body>
     <script>
         // Leia 6 notas válidas (de 0 a 10), calcule e exiba a média simples.
+
+        var soma = 0
+
+        for (let i = 1; i <= 6; i++) {
+
+            var nota = Number(prompt("Digite a " + i + "ª nota"))
+
+            while (nota < 0 || nota > 10) {
+                alert("Nota inválida, digite novamente")
+                nota = Number(prompt("Digite a " + i + "ª nota"))
+            }
+
+            soma = soma + nota
+        }
+
+        var media = soma / 6
+
+        alert("A média das notas é: " + media)
     </script>
 </body>
 </html>

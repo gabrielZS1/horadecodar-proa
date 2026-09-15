@@ -1,13 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <script>
-        // Leia dois inteiros (sendo o primeiro menor que o segundo) e calcule a média desses números e de todos os inteiros entre eles.
+        // Leia dois inteiros (sendo o primeiro menor que o segundo) e calcule a média desses
+        // números e de todos os inteiros entre eles.
+
+        var num1 = Number(prompt("Digite um numero"))
+        var num2 = Number(prompt("Digite o segundo numero"))
+
+        while (num1 > num2) {
+            alert("O primeiro numero deve ser menor que o segundo, tente novamente")
+
+            num1 = Number(prompt("Digite um numero, novamente"))
+            num2 = Number(prompt("Digite o segundo numero, novamente"))
+        }
+
+        var soma = 0        
+        var contador = num1 
+        var quantidade = 0    
+
+        while (contador <= num2) {
+            soma = soma + contador
+            quantidade = quantidade + 1
+            contador = contador + 1
+        }
+
+        var media = soma / quantidade
+
+        alert("A média entre " + num1 + " e " + num2 + " (incluindo todos os inteiros entre eles) é: " + media)
+        
     </script>
 </body>
+
 </html>

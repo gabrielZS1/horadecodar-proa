@@ -9,12 +9,14 @@
     <script>
         //Leia um valor e diga se ele é positivo, negativo ou zero.
 
-        var numero = prompt ("digite um número")
+        var numero = Number(prompt ("digite um número"))
 
-        if (numero >= 0) {
-            alert ("Esse número é possitivo")
-        } else {
+        if (numero > 0) {
+            alert ("Esse número é positivo")
+        } else if (numero < 0) {
             alert ("Esse numero é negativo")
+        } else {
+            alert ("Esse numero é zero")
         }
     </script>
 </body>

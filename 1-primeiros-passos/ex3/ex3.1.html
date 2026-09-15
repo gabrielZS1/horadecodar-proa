@@ -11,18 +11,17 @@
     <script>
         // Crie uma bomba-relógio com contagem regressiva de 30 até 0 e, ao final, escreva `EXPLOSÃO`.
 
-        let contagem
-        let mensagem = "EXPLOSÃO"
+        const mensagem = "EXPLOSÃO"
 
-        for (let i = 1; i <= 30; i++) {
+        for (let i = 0; i <= 30; i++) {
 
             setTimeout(function () {
-                
+
                 let contagemAtual = 30 - i;
 
-                if (contagemAtual > 0) {
-                    console.log(contagemAtual);
-                } else {
+                console.log(contagemAtual);
+
+                if (contagemAtual === 0) {
                     console.log(mensagem);
                 }
 

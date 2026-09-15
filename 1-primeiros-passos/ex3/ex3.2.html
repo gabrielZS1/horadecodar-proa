@@ -7,20 +7,19 @@
 </head>
 <body>
     <script>
-        // Leia dois valores. Enquanto o segundo valor for menor ou igual a zero, peça novamente esse mesmo valor. Ao final, mostre a divisão do primeiro pelo segundo.
+        // Leia dois valores. Enquanto o segundo valor for menor ou igual a zero, peça novamente esse mesmo valor. 
+        // Ao final, mostre a divisão do primeiro pelo segundo.
 
-        var num1 = Number(prompt("Digite seu primeiro numero"))
-        var num2 = Number(prompt("Digite seu primeiro numero"))
+        var primeiro = Number(prompt("Digite o primeiro valor"))
+        var segundo = Number(prompt("Digite o segundo valor"))
 
-        while (num2 <= 0) {
-            alert ("O segundo numero deve ser maior que 0")
-
-            num2 = Number(prompt("Digite seu segundo numero novamente"))
+        while (segundo <= 0) {
+            alert("Segundo valor inválido, digite novamente")
+            segundo = Number(prompt("Digite o segundo valor"))
         }
-        
-        var divisao = num1 / num2
 
-        alert ("A divisão dos 2 numeros é: " + divisao)
+        var divisao = primeiro / segundo
+        alert("A divisão do primeiro pelo segundo é: " + divisao)
     </script>
 </body>
 </html>
