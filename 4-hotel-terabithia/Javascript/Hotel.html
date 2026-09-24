@@ -20,7 +20,7 @@
 		var eventos_confirmados = [];
 
 		function formatarMoeda(valor) {
-			return 'R$ ' + valor.toFixed(2).replace('.', ',');
+			return 'R$ ' + valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 		}
 
 		function login() {
@@ -431,12 +431,93 @@
 		}
 
 		function ar_condicionado() {
-			alert(`HOTEL ${nome_hotel} - AR-CONDICIONADO`);
+
+			var orcamentos = [];
+			var continuar = 'S';
+
+			while (continuar.toUpperCase() === 'S') {
+
+				var empresa = prompt('Empresa:');
+				var valor_aparelho = parseFloat(prompt('Valor por aparelho:'));
+				var quantidade = parseInt(prompt('Quantidade:'));
+				var desconto_percentual = parseFloat(prompt('Desconto (%):'));
+				var minimo = parseInt(prompt('Mínimo para desconto:'));
+				var deslocamento = parseFloat(prompt('Deslocamento:'));
+
+				var bruto = valor_aparelho * quantidade;
+				var desconto_valor = 0;
+
+				if (quantidade >= minimo) {
+					desconto_valor = bruto * (desconto_percentual / 100);
+				}
+
+				var total = bruto - desconto_valor + deslocamento;
+
+				alert('O serviço de ' + empresa + ' custará ' + formatarMoeda(total));
+
+				orcamentos.push({ empresa: empresa, total: total });
+
+				continuar = prompt('Deseja informar novos dados, ' + nome + '? (S/N):');
+			}
+
+			var menor = orcamentos[0];
+			var maior = orcamentos[0];
+
+			for (var i = 1; i < orcamentos.length; i++) {
+				if (orcamentos[i].total < menor.total) {
+					menor = orcamentos[i];
+				}
+
+				if (orcamentos[i].total > maior.total) {
+					maior = orcamentos[i];
+				}
+			}
+
+			var diferenca_percentual = ((maior.total - menor.total) / menor.total) * 100;
+
+			alert('Melhor orçamento: ' + menor.empresa + ' — ' + formatarMoeda(menor.total) + '\nMaior orçamento: ' + maior.empresa + ' — ' + formatarMoeda(maior.total) + '\nDiferença percentual: ' + diferenca_percentual.toFixed(2) + '%');
+
 			inicio();
 		}
 
 		function abastecimento() {
-			alert(`HOTEL ${nome_hotel} - ABASTECIMENTO`);
+
+			var postos = [
+				{ nome: 'Wayne Oil' },
+				{ nome: 'Stark Petrol' }
+			];
+
+			for (var i = 0; i < postos.length; i++) {
+				postos[i].alcool = parseFloat(prompt(postos[i].nome + ' -> Preço do álcool:'));
+				postos[i].gasolina = parseFloat(prompt(postos[i].nome + ' -> Preço da gasolina:'));
+
+				if (postos[i].alcool <= postos[i].gasolina * 0.70) {
+					postos[i].combustivel = 'Álcool';
+					postos[i].preco = postos[i].alcool;
+				} else {
+					postos[i].combustivel = 'Gasolina';
+					postos[i].preco = postos[i].gasolina;
+				}
+
+				postos[i].total = postos[i].preco * 42;
+			}
+
+			postos.sort(function (a, b) {
+				return a.total - b.total;
+			});
+
+			var ranking = '';
+
+			for (var i = 0; i < postos.length; i++) {
+				ranking = ranking + postos[i].nome + ': melhor opção = ' + postos[i].combustivel + ' | Total (42L) = ' + formatarMoeda(postos[i].total) + '\n';
+			}
+
+			alert(ranking);
+
+			var melhor = postos[0];
+
+			alert(nome + ', é mais barato abastecer com ' + melhor.combustivel.toLowerCase() + ' no posto ' + melhor.nome + '.');
+
 			inicio();
 		}
 
