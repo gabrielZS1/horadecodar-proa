@@ -3,57 +3,124 @@
 <head>
 
 	<script>
-	
+
+		const nome_hotel = 'Transilvânia';
+		const senha = '2678';
+		var nome;
+
+		var quartos = [];
+		for (var i = 1; i <= 20; i++) {
+			quartos.push('livre');
+		}
+
+		function formatarMoeda(valor) {
+			return 'R$ ' + valor.toFixed(2).replace('.', ',');
+		}
+
+		function login() {
+
+			alert(`Bem-vindo ao ${nome_hotel}`);
+
+			nome = prompt('Informe seu nome:');
+			var senha_digitada = prompt(`${nome}, informe a senha:`);
+			var tentativas = 3;
+			var permissao = false;
+
+			while (tentativas > 0 && permissao == false) {
+
+				if (senha_digitada === senha) {
+					permissao = true;
+				} else {
+					tentativas--;
+
+					if (tentativas === 0) {
+						alert('Número de tentativas excedido. Acesso negado.');
+						window.close();
+					} else {
+						senha_digitada = prompt(`${nome}, informe a senha, você tem mais ${tentativas} tentativas:`);
+					}
+				}
+			}
+
+			if (permissao == true) {
+				alert(`Bem-vindo ao Hotel ${nome_hotel}, ${nome}. É um imenso prazer ter você por aqui!`);
+				inicio();
+			}
+		}
+
 
 		function inicio() {
 
-			var escolha = parseInt(prompt('Selecione uma opção 1.) Reserva de Quartos 2.) Cadastro de Hóspedes 3.) Abastecimento de Carros 4.) Sair'));
+			var escolha = parseInt(prompt('Selecione uma opção 1.) Reservas de Quartos 2.) Cadastro de Hóspedes 3.) Eventos 4.) Ar-Condicionado 5.) Abastecimento 6.) Relatórios Operacionais 7.) Sair'));
 
 			if (escolha === 1) {
 				reserva_quartos();
 			} else if (escolha === 2) {
 				cadastro_hospedes();
 			} else if (escolha === 3) {
-				abastecer_carros();
+				eventos();
 			} else if (escolha === 4) {
+				ar_condicionado();
+			} else if (escolha === 5) {
+				abastecimento();
+			} else if (escolha === 6) {
+				relatorios_operacionais();
+			} else if (escolha === 7) {
 				sair();
 			} else {
 				erro();
 			}
-		}		
+
+		}
 
 		function reserva_quartos() {
-			alert('HOTEL {NOME DO HOTEL} - RESERVA DE QUARTOS');
+			alert(`HOTEL ${nome_hotel} - RESERVA DE QUARTOS`);
 			inicio();
 		}
 
 		function cadastro_hospedes() {
-			alert('HOTEL {NOME DO HOTEL} - CADASTRO DE HÓSPEDES');
+			alert(`HOTEL ${nome_hotel} - CADASTRO DE HÓSPEDES`);
 			inicio();
 		}
 
-		function abastecer_carros() {
-			alert('HOTEL {NOME DO HOTEL} - ABASTECER');
+		function eventos() {
+			alert(`HOTEL ${nome_hotel} - EVENTOS`);
+			inicio();
+		}
+
+		function ar_condicionado() {
+			alert(`HOTEL ${nome_hotel} - AR-CONDICIONADO`);
+			inicio();
+		}
+
+		function abastecimento() {
+			alert(`HOTEL ${nome_hotel} - ABASTECIMENTO`);
+			inicio();
+		}
+
+		function relatorios_operacionais() {
+			alert(`HOTEL ${nome_hotel} - RELATÓRIOS OPERACIONAIS`);
 			inicio();
 		}
 
 		function erro() {
-			alert('Por favor, informe um número entre 1 e 4');
+			alert('Por favor, informe um número entre 1 e 7');
 			inicio();
 		}
 
 		function sair() {
 			var confirma = confirm('Você deseja sair?');
 			if (confirma) {
+				alert(`Muito obrigado e até logo, ${nome}.`);
 				window.close();
 			} else {
 				inicio();
 			}
 		}
 
-		
-		
-		inicio();
+
+
+		login();
 	</script>
 </head>
 

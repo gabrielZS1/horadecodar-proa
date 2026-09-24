@@ -54,6 +54,7 @@ Menu mínimo:
 
 1. Reservas de Quartos
 2. Cadastro de Hóspedes
++
 3. Eventos
 4. Ar-Condicionado
 5. Abastecimento
