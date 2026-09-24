@@ -13,6 +13,8 @@
 			quartos.push('livre');
 		}
 
+		var reservas = [];
+
 		function formatarMoeda(valor) {
 			return 'R$ ' + valor.toFixed(2).replace('.', ',');
 		}
@@ -74,8 +76,86 @@
 		}
 
 		function reserva_quartos() {
-			alert(`HOTEL ${nome_hotel} - RESERVA DE QUARTOS`);
-			inicio();
+
+			var diaria = parseFloat(prompt('Informe o valor da diária:'));
+			var diarias = parseInt(prompt('Informe a quantidade de diárias (1-30):'));
+
+			if (isNaN(diaria) || diaria <= 0 || isNaN(diarias) || diarias < 1 || diarias > 30) {
+				alert('Valor inválido, ' + nome);
+				inicio();
+			} else {
+
+				var hospede = prompt('Informe o nome do hóspede:');
+
+				var tipo_quarto = prompt('Tipo de quarto (S/E/L):');
+				tipo_quarto = tipo_quarto.toUpperCase();
+
+				var fator = 1;
+				var nome_tipo = 'Standard';
+
+				if (tipo_quarto === 'E') {
+					fator = 1.35;
+					nome_tipo = 'Executivo';
+				} else if (tipo_quarto === 'L') {
+					fator = 1.65;
+					nome_tipo = 'Luxo';
+				}
+
+				var quarto = parseInt(prompt('Escolha um quarto (1-20):'));
+
+				while (quartos[quarto - 1] === 'ocupado') {
+					alert('Quarto já está ocupado');
+
+					var lista_livres = '';
+					for (var i = 0; i < 20; i++) {
+						if (quartos[i] === 'livre') {
+							lista_livres = lista_livres + (i + 1) + ' ';
+						}
+					}
+
+					alert('Quartos livres: ' + lista_livres);
+
+					quarto = parseInt(prompt('Escolha outro quarto (1-20):'));
+				}
+
+				var subtotal = diaria * diarias * fator;
+				var taxa = subtotal * 0.10;
+				var total = subtotal + taxa;
+
+				alert('Resumo:\nHóspede: ' + hospede + '\nQuarto: ' + quarto + ' (' + nome_tipo + ')\nSubtotal: ' + formatarMoeda(subtotal) + '\nTaxa de serviço (10%): ' + formatarMoeda(taxa) + '\nTotal: ' + formatarMoeda(total));
+
+				var confirma = prompt(nome + ', confirma a reserva? (S/N):');
+
+				if (confirma.toUpperCase() === 'S') {
+					quartos[quarto - 1] = 'ocupado';
+					reservas.push({ hospede: hospede, quarto: quarto, diarias: diarias, total: total });
+					alert('Reserva efetuada com sucesso.');
+				} else {
+					alert('Reserva não efetuada.');
+				}
+
+				mapa_quartos();
+
+				inicio();
+			}
+		}
+
+		function mapa_quartos() {
+			var mapa = '';
+
+			for (var i = 0; i < 20; i++) {
+				if (quartos[i] === 'livre') {
+					mapa = mapa + 'L ';
+				} else {
+					mapa = mapa + 'O ';
+				}
+
+				if ((i + 1) % 4 === 0) {
+					mapa = mapa + '\n';
+				}
+			}
+
+			alert('Mapa de quartos:\n' + mapa);
 		}
 
 		function cadastro_hospedes() {
