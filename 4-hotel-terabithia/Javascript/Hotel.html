@@ -15,6 +15,10 @@
 
 		var reservas = [];
 
+		var hospedes = [];
+
+		var eventos_confirmados = [];
+
 		function formatarMoeda(valor) {
 			return 'R$ ' + valor.toFixed(2).replace('.', ',');
 		}
@@ -159,13 +163,271 @@
 		}
 
 		function cadastro_hospedes() {
-			alert(`HOTEL ${nome_hotel} - CADASTRO DE HÓSPEDES`);
-			inicio();
+
+			var escolha_hospedes = parseInt(prompt('[Cadastro de Hóspedes]\n1-Cadastrar 2-Pesquisar exato 3-Pesquisar prefixo 4-Listar 5-Atualizar 6-Remover 7-Voltar'));
+
+			if (escolha_hospedes === 1) {
+				cadastrar_hospede();
+			} else if (escolha_hospedes === 2) {
+				pesquisar_hospede_exato();
+			} else if (escolha_hospedes === 3) {
+				pesquisar_hospede_prefixo();
+			} else if (escolha_hospedes === 4) {
+				listar_hospedes();
+			} else if (escolha_hospedes === 5) {
+				atualizar_hospede();
+			} else if (escolha_hospedes === 6) {
+				remover_hospede();
+			} else if (escolha_hospedes === 7) {
+				inicio();
+			} else {
+				erro_cadastro_hospedes();
+			}
+		}
+
+		function cadastrar_hospede() {
+
+			if (hospedes.length >= 15) {
+				alert('Máximo de cadastros atingido');
+			} else {
+
+				var nome_hospede = prompt('Nome do hóspede:');
+				var ja_cadastrado = false;
+
+				for (var i = 0; i < hospedes.length; i++) {
+					if (hospedes[i].nome === nome_hospede) {
+						ja_cadastrado = true;
+					}
+				}
+
+				if (ja_cadastrado) {
+					alert('Hóspede já cadastrado');
+				} else {
+					hospedes.push({ nome: nome_hospede, data: new Date().toLocaleString() });
+					alert('Hóspede cadastrado com sucesso.');
+				}
+			}
+
+			cadastro_hospedes();
+		}
+
+		function pesquisar_hospede_exato() {
+
+			var nome_procurado = prompt('Nome do hóspede para pesquisa exata:');
+			var encontrado = false;
+
+			for (var i = 0; i < hospedes.length; i++) {
+				if (hospedes[i].nome === nome_procurado) {
+					encontrado = true;
+				}
+			}
+
+			if (encontrado) {
+				alert('Hospede ' + nome_procurado + ' foi encontrado');
+			} else {
+				alert('Hóspede não encontrado');
+			}
+
+			cadastro_hospedes();
+		}
+
+		function pesquisar_hospede_prefixo() {
+
+			var prefixo = prompt('Prefixo:');
+			var resultados = '';
+			var contador = 0;
+
+			for (var i = 0; i < hospedes.length; i++) {
+				if (hospedes[i].nome.toUpperCase().indexOf(prefixo.toUpperCase()) === 0) {
+					contador++;
+					resultados = resultados + '[' + contador + '] ' + hospedes[i].nome + '\n';
+				}
+			}
+
+			if (contador === 0) {
+				alert('Hóspede não encontrado');
+			} else {
+				alert('Resultados:\n' + resultados);
+			}
+
+			cadastro_hospedes();
+		}
+
+		function listar_hospedes() {
+
+			if (hospedes.length === 0) {
+				alert('Nenhum hóspede cadastrado');
+			} else {
+
+				hospedes.sort(function (a, b) {
+					if (a.nome.toUpperCase() < b.nome.toUpperCase()) {
+						return -1;
+					} else if (a.nome.toUpperCase() > b.nome.toUpperCase()) {
+						return 1;
+					} else {
+						return 0;
+					}
+				});
+
+				var lista = '';
+
+				for (var i = 0; i < hospedes.length; i++) {
+					lista = lista + '[' + (i + 1) + '] ' + hospedes[i].nome + ' - ' + hospedes[i].data + '\n';
+				}
+
+				alert('Hóspedes cadastrados:\n' + lista);
+			}
+
+			cadastro_hospedes();
+		}
+
+		function atualizar_hospede() {
+
+			listar_hospedes_sem_menu();
+			var indice = parseInt(prompt('Informe o índice do hóspede que deseja atualizar:'));
+
+			if (isNaN(indice) || indice < 1 || indice > hospedes.length) {
+				alert('Hóspede não encontrado');
+			} else {
+
+				var novo_nome = prompt('Novo nome do hóspede:');
+				hospedes[indice - 1].nome = novo_nome;
+				alert('Operação realizada com sucesso');
+			}
+
+			cadastro_hospedes();
+		}
+
+		function remover_hospede() {
+
+			listar_hospedes_sem_menu();
+			var indice = parseInt(prompt('Informe o índice do hóspede que deseja remover:'));
+
+			if (isNaN(indice) || indice < 1 || indice > hospedes.length) {
+				alert('Hóspede não encontrado');
+			} else {
+
+				hospedes.splice(indice - 1, 1);
+				alert('Operação realizada com sucesso');
+			}
+
+			cadastro_hospedes();
+		}
+
+		function listar_hospedes_sem_menu() {
+
+			var lista = '';
+
+			for (var i = 0; i < hospedes.length; i++) {
+				lista = lista + '[' + (i + 1) + '] ' + hospedes[i].nome + '\n';
+			}
+
+			alert('Hóspedes cadastrados:\n' + lista);
+		}
+
+		function erro_cadastro_hospedes() {
+			alert('Por favor, informe um número entre 1 e 7');
+			cadastro_hospedes();
 		}
 
 		function eventos() {
-			alert(`HOTEL ${nome_hotel} - EVENTOS`);
-			inicio();
+
+			var convidados = parseInt(prompt('Convidados:'));
+
+			if (isNaN(convidados) || convidados < 0 || convidados > 350) {
+				alert('Número de convidados inválido');
+				inicio();
+			} else {
+
+				var auditorio = '';
+				var cadeiras_adicionais = 0;
+
+				if (convidados <= 220) {
+					auditorio = 'Laranja';
+
+					if (convidados > 150) {
+						cadeiras_adicionais = convidados - 150;
+					}
+				} else {
+					auditorio = 'Colorado';
+				}
+
+				if (cadeiras_adicionais > 0) {
+					alert('Auditório selecionado: ' + auditorio + ' (' + cadeiras_adicionais + ' cadeiras adicionais)');
+				} else {
+					alert('Auditório selecionado: ' + auditorio);
+				}
+
+				var dia = prompt('Dia:');
+				dia = dia.toLowerCase();
+
+				var hora_inicial = Number(prompt('Hora inicial:'));
+				var duracao = parseInt(prompt('Duração:'));
+
+				var abertura = 7;
+				var fechamento = 23;
+
+				if (dia === 'sabado' || dia === 'domingo') {
+					fechamento = 15;
+				}
+
+				var hora_final = hora_inicial + duracao;
+
+				if (isNaN(hora_inicial) || hora_inicial % 1 !== 0 || isNaN(duracao) || duracao < 1 || duracao > 12 || hora_inicial < abertura || hora_final > fechamento) {
+					alert('Auditório indisponível para o horário informado.');
+					inicio();
+				} else {
+
+					var empresa = prompt('Empresa:');
+					alert('Auditório reservado para ' + empresa + ': ' + dia + ' às ' + hora_inicial + 'hs');
+
+					var base_garcons = Math.ceil(convidados / 12);
+					var reforco_garcons = Math.floor(duracao / 2);
+					var total_garcons = base_garcons + reforco_garcons;
+					var custo_garcons = total_garcons * duracao * 10.50;
+
+					var cafe = convidados * 0.2;
+					var agua = convidados * 0.5;
+					var salgados = convidados * 7;
+
+					var custo_cafe = cafe * 0.80;
+					var custo_agua = agua * 0.40;
+					var custo_salgados = (salgados / 100) * 34.00;
+					var custo_buffet = custo_cafe + custo_agua + custo_salgados;
+
+					var total_evento = custo_garcons + custo_buffet;
+
+					var relatorio = 'Relatório do Evento\n';
+					relatorio = relatorio + 'Auditório: ' + auditorio + '\n';
+					relatorio = relatorio + 'Empresa: ' + empresa + '\n';
+					relatorio = relatorio + 'Dia: ' + dia + '\n';
+					relatorio = relatorio + 'Hora início: ' + hora_inicial + 'hs\n';
+					relatorio = relatorio + 'Hora fim: ' + hora_final + 'hs\n';
+					relatorio = relatorio + 'Convidados: ' + convidados + '\n';
+					relatorio = relatorio + 'Duração: ' + duracao + 'h\n';
+					relatorio = relatorio + 'Garçons necessários: ' + total_garcons + '\n';
+					relatorio = relatorio + 'Custo com garçons: ' + formatarMoeda(custo_garcons) + '\n';
+					relatorio = relatorio + '\nBuffet:\n';
+					relatorio = relatorio + 'Café: ' + cafe + ' L\n';
+					relatorio = relatorio + 'Água: ' + agua + ' L\n';
+					relatorio = relatorio + 'Salgados: ' + salgados + ' un\n';
+					relatorio = relatorio + 'Custo buffet: ' + formatarMoeda(custo_buffet) + '\n';
+					relatorio = relatorio + '\nTotal do evento: ' + formatarMoeda(total_evento);
+
+					alert(relatorio);
+
+					var confirma = prompt('Confirmar reserva? (S/N):');
+
+					if (confirma.toUpperCase() === 'S') {
+						eventos_confirmados.push({ empresa: empresa, auditorio: auditorio, convidados: convidados, total: total_evento });
+						alert('Reserva efetuada com sucesso.');
+					} else {
+						alert('Reserva não efetuada.');
+					}
+
+					inicio();
+				}
+			}
 		}
 
 		function ar_condicionado() {
