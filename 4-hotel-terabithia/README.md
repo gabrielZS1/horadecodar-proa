@@ -515,3 +515,30 @@ Formato recomendado: tabela textual alinhada.
 3. Evidências de teste (capturas ou logs)
 4. Breve documentação da arquitetura modular adotada
 
+---
+
+## Como executar
+
+1. Baixe ou clone o repositório do GitHub.
+2. Entre na pasta `4-hotel-terabithia/Javascript`.
+3. Abra o arquivo `Hotel.html` com dois cliques (ele abre direto no navegador).
+4. O sistema vai pedir seu nome e a senha de acesso (senha: 2678, com até 3 tentativas).
+5. Depois do login, use o menu principal (digite o número da opção desejada) para navegar entre Reservas de Quartos, Cadastro de Hóspedes, Eventos, Ar-Condicionado, Abastecimento, Relatórios Operacionais e Sair.
+6. Todas as interações acontecem por caixas de diálogo (prompt/alert) do próprio navegador.
+
+## Arquitetura do sistema
+
+O programa é dividido em funções, cada uma cuidando de uma parte do hotel:
+
+- **login()**: pede nome e senha, controla as 3 tentativas e libera o acesso.
+- **inicio()**: menu principal, direciona pra cada módulo conforme a opção escolhida.
+- **reserva_quartos() / mapa_quartos()**: cuidam da reserva de quartos e mostram o mapa de ocupação.
+- **cadastro_hospedes()** e as funções internas (cadastrar, pesquisar exato, pesquisar prefixo, listar, atualizar, remover): gerenciam o cadastro de hóspedes.
+- **eventos()**: faz todo o fluxo de reserva de evento (auditório, agenda, garçons, buffet e relatório).
+- **ar_condicionado()**: compara orçamentos de diferentes empresas de manutenção.
+- **abastecimento()**: compara preços de combustível entre os postos conveniados.
+- **relatorios_operacionais()**: junta os dados guardados durante o uso (reservas, hóspedes, eventos) e mostra um resumo.
+- **formatarMoeda() e respostaSim()**: funções auxiliares reaproveitadas em vários módulos, pra formatar valores em reais e validar respostas S/N.
+
+Os dados ficam guardados em memória em arrays globais (quartos, reservas, hospedes, eventos_confirmados) durante a execução do programa, sem uso de banco de dados.
+
