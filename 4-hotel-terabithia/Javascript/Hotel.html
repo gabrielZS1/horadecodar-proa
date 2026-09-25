@@ -23,6 +23,14 @@
 			return 'R$ ' + valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 		}
 
+		function respostaSim(resposta) {
+			if (resposta === null) {
+				return false;
+			}
+
+			return resposta.toUpperCase() === 'S';
+		}
+
 		function login() {
 
 			alert(`Bem-vindo ao ${nome_hotel}`);
@@ -130,7 +138,7 @@
 
 				var confirma = prompt(nome + ', confirma a reserva? (S/N):');
 
-				if (confirma.toUpperCase() === 'S') {
+				if (respostaSim(confirma)) {
 					quartos[quarto - 1] = 'ocupado';
 					reservas.push({ hospede: hospede, quarto: quarto, diarias: diarias, total: total });
 					alert('Reserva efetuada com sucesso.');
@@ -418,7 +426,7 @@
 
 					var confirma = prompt('Confirmar reserva? (S/N):');
 
-					if (confirma.toUpperCase() === 'S') {
+					if (respostaSim(confirma)) {
 						eventos_confirmados.push({ empresa: empresa, auditorio: auditorio, convidados: convidados, total: total_evento });
 						alert('Reserva efetuada com sucesso.');
 					} else {
@@ -435,7 +443,7 @@
 			var orcamentos = [];
 			var continuar = 'S';
 
-			while (continuar.toUpperCase() === 'S') {
+			while (respostaSim(continuar)) {
 
 				var empresa = prompt('Empresa:');
 				var valor_aparelho = parseFloat(prompt('Valor por aparelho:'));
@@ -522,7 +530,42 @@
 		}
 
 		function relatorios_operacionais() {
-			alert(`HOTEL ${nome_hotel} - RELATÓRIOS OPERACIONAIS`);
+
+			var quartos_ocupados = 0;
+
+			for (var i = 0; i < quartos.length; i++) {
+				if (quartos[i] === 'ocupado') {
+					quartos_ocupados++;
+				}
+			}
+
+			var taxa_ocupacao = (quartos_ocupados / 20) * 100;
+
+			var receita_hospedagem = 0;
+
+			for (var i = 0; i < reservas.length; i++) {
+				receita_hospedagem = receita_hospedagem + reservas[i].total;
+			}
+
+			var receita_eventos = 0;
+
+			for (var i = 0; i < eventos_confirmados.length; i++) {
+				receita_eventos = receita_eventos + eventos_confirmados[i].total;
+			}
+
+			var receita_total = receita_hospedagem + receita_eventos;
+
+			var relatorio = 'RELATÓRIOS OPERACIONAIS\n\n';
+			relatorio = relatorio + 'Reservas de quartos confirmadas: ' + reservas.length + '\n';
+			relatorio = relatorio + 'Taxa de ocupação atual: ' + taxa_ocupacao.toFixed(2) + '%\n';
+			relatorio = relatorio + 'Hóspedes cadastrados: ' + hospedes.length + '\n';
+			relatorio = relatorio + 'Eventos confirmados: ' + eventos_confirmados.length + '\n\n';
+			relatorio = relatorio + 'Receita hospedagem: ' + formatarMoeda(receita_hospedagem) + '\n';
+			relatorio = relatorio + 'Receita eventos: ' + formatarMoeda(receita_eventos) + '\n';
+			relatorio = relatorio + 'Receita total: ' + formatarMoeda(receita_total);
+
+			alert(relatorio);
+
 			inicio();
 		}
 
