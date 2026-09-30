@@ -1,57 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BichinhoVirtual</title>
     <script>
-
-        // Classe Principal (normalmente em um arquivo externo)
         class BichinhoVirtual {
             constructor(nome) {
                 this.nome = nome;
                 this.nivelDeFome = 50;
                 this.nivelFelicidade = 50;
+                this.nivelCansaco = 0;
+                this.idade = 0;
             }
 
             alimentar() {
                 this.nivelDeFome -= 10;
+                if (this.nivelDeFome < 0) {
+                    this.nivelDeFome = 0;
+                }
                 console.log(`${this.nome} foi alimentado. O nível de fome diminuiu.`);
             }
 
             brincar() {
                 this.nivelFelicidade += 10;
-                console.log(`${this.nome} está brincando e se sentindo mais feliz.`);
+                this.nivelCansaco += 15;
+                if (this.nivelFelicidade > 100) {
+                    this.nivelFelicidade = 100;
+                }
+                console.log(`${this.nome} está brincando e se sentindo mais feliz, mas ficou mais cansado.`);
+            }
+
+            descansar() {
+                this.nivelCansaco -= 30;
+                if (this.nivelCansaco < 0) {
+                    this.nivelCansaco = 0;
+                }
+                console.log(`${this.nome} descansou e está menos cansado.`);
             }
 
             verificarStatus() {
                 console.log(`Status atual de ${this.nome}:`);
+                console.log(`Idade: ${this.idade}`);
                 console.log(`Nível de fome: ${this.nivelDeFome}`);
                 console.log(`Nível de felicidade: ${this.nivelFelicidade}`);
+                console.log(`Nível de cansaço: ${this.nivelCansaco}`);
             }
 
             passarTempo() {
-                this.nivelDeFome += 5;
-                console.log(`${this.nome} está ficando mais faminto com o passar do tempo.`);
+                this.nivelDeFome += 3;
+                this.nivelFelicidade -= 3;
+                this.nivelCansaco += 10;
+                this.idade += 1;
+                console.log(`O tempo passou. ${this.nome} agora tem ${this.idade} de idade.`);
+            }
+
+            perdeu() {
+                if (this.nivelDeFome >= 100) {
+                    console.log(`${this.nome} morreu de fome. Você perdeu!`);
+                    return true;
+                }
+                if (this.nivelCansaco >= 100) {
+                    console.log(`${this.nome} ficou exausto demais. Você perdeu!`);
+                    return true;
+                }
+                if (this.nivelFelicidade <= 0) {
+                    console.log(`${this.nome} ficou muito triste. Você perdeu!`);
+                    return true;
+                }
+                return false;
+            }
+
+            ganhou() {
+                if (this.idade >= 50) {
+                    console.log(`Parabéns! ${this.nome} chegou aos 50 anos. Você ganhou!`);
+                    return true;
+                }
+                return false;
             }
         }
     </script>
     <script>
-
-        // Programa Principal
         console.log("Bem-vindo ao Simulador de Animal de Estimação Virtual!");
         const nomePet = prompt("Digite o nome do seu animal de estimação:") || "Baltazar Guilherme Tenório";
-        const pet = new VirtualPet(nomePet);
+        const pet = new BichinhoVirtual(nomePet);
 
         while (true) {
             console.log("\nEscolha uma ação:");
             console.log("1. Alimentar " + nomePet);
             console.log("2. Brincar com " + nomePet);
-            console.log("3. Verificar o status de " + nomePet);
-            console.log("4. Sair");
+            console.log("3. Descansar " + nomePet);
+            console.log("4. Verificar o status de " + nomePet);
+            console.log("5. Sair");
 
-            const escolha = parseInt(prompt("Escolha uma opção:"));
+            const escolha = parseInt(prompt("Escolha uma opção:\n1. Alimentar\n2. Brincar\n3. Descansar\n4. Ver status\n5. Sair"));
+
+            if (escolha === 5) {
+                console.log("Saindo do Simulador de Animal de Estimação Virtual. Adeus!");
+                break;
+            }
 
             switch (escolha) {
                 case 1:
@@ -61,16 +109,24 @@
                     pet.brincar();
                     break;
                 case 3:
-                    pet.verificarStatus();
+                    pet.descansar();
                     break;
                 case 4:
-                    console.log("Saindo do Simulador de Animal de Estimação Virtual. Adeus!");
-                    process.exit();
+                    pet.verificarStatus();
+                    break;
                 default:
                     console.log("Escolha inválida. Tente novamente.");
             }
 
-            pet.passarTempo(); // Simula o tempo que passa após cada ação
+            pet.passarTempo();
+
+            if (pet.perdeu()) {
+                break;
+            }
+
+            if (pet.ganhou()) {
+                break;
+            }
         }
     </script>
 </head>
